@@ -1,0 +1,13 @@
+package mx.edu.utez.Prestamos_Libros;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class PrestamosLibrosApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
