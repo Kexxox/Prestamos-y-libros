@@ -45,7 +45,7 @@ public class PrestamoService {
             throw new BadRequestException("El libro no tiene ejemplares disponibles.");
         }
 
-        long prestamosActivos = prestamoRepository.contarByLectorIdAndEstadoIn(
+        long prestamosActivos = prestamoRepository.countByLector_IdAndEstadoIn(
                 lector.getId(),
                 List.of(EstadoPrestamo.PRESTADO, EstadoPrestamo.VENCIDO)
         );
@@ -96,10 +96,10 @@ public class PrestamoService {
 
     public Prestamo renovarPrestamo(Long prestamoId) {
         Prestamo prestamo = prestamoRepository.findById(prestamoId)
-                .orElseThrow(() -> new ResourceNotFoundException("El préstamo no existe."));
+                .orElseThrow(() -> new ResourceNotFoundException("El préstamo no existe"));
 
         if (prestamo.getEstado() == EstadoPrestamo.VENCIDO || prestamo.getEstado() == EstadoPrestamo.DEVUELTO) {
-            throw new BadRequestException("No se puede renovar un préstamo que se encuentra VENCIDO o DEVUELTO.");
+            throw new BadRequestException("No se puede renovar un préstamo que se encuentra");
         }
 
         prestamo.setFechaDevolucionMaxima(prestamo.getFechaDevolucionMaxima().plusDays(7));
@@ -108,10 +108,10 @@ public class PrestamoService {
 
     public List<Prestamo> listarPrestamosActivosLector(Long lectorId) {
         if (!lectorRepository.existsById(lectorId)) {
-            throw new ResourceNotFoundException("El lector no existe.");
+            throw new ResourceNotFoundException("El lector no existe");
         }
 
-        return prestamoRepository.encontrarByLectorIdAndEstadoIn(
+        return prestamoRepository.findByLector_IdAndEstadoIn(
                 lectorId,
                 List.of(EstadoPrestamo.PRESTADO, EstadoPrestamo.VENCIDO)
         );
